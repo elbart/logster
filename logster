@@ -50,21 +50,14 @@ import logging.handlers
 import fcntl
 import socket 
 import traceback
+import ConfigParser
 
 from time import time
 from math import floor
 
-# Local dependencies
-sys.path.append("/usr/share/logster")
-from logster_helper import LogsterParsingException, LockingError
-
-# Globals
-gmetric = "/usr/bin/gmetric"
-logtail = "/usr/sbin/logtail2"
-log_dir = "/var/log/logster"
-state_dir = "/var/run"
-
 script_start_time = time()
+config_file = '/etc/logster/logster.conf'
+lib_dir = '/usr/share/logster'
 
 # Command-line options and parsing.
 cmdline = optparse.OptionParser(usage="usage: %prog [options] parser logfile",
@@ -81,8 +74,8 @@ cmdline.add_option('--gmetric-options', action='store',
                     default='-d 180 -c /etc/ganglia/gmond.conf')
 cmdline.add_option('--graphite-host', action='store',
                     help='Hostname and port for Graphite collector, e.g. graphite.example.com:2003')
-cmdline.add_option('--state-dir', '-s', action='store', default=state_dir,
-                    help='Where to store the logtail state file.  Default location %s' % state_dir)
+#cmdline.add_option('--state-dir', '-s', action='store', default=state_dir,
+#                    help='Where to store the logtail state file.  Default location %s' % state_dir)
 cmdline.add_option('--output', '-o', action='append',
                    choices=('graphite', 'ganglia', 'stdout'),
                    help="Where to send metrics (can specify multiple times). Choices are 'graphite', 'ganglia', or 'stdout'.")
@@ -90,6 +83,10 @@ cmdline.add_option('--dry-run', '-d', action='store_true', default=False,
                     help='Parse the log file but send stats to standard output.')
 cmdline.add_option('--debug', '-D', action='store_true', default=False,
                     help='Provide more verbose logging for debugging.')
+cmdline.add_option('--config-file', '-c', action='store', default=config_file,
+                    help='Configuration file for logster')
+cmdline.add_option('--lib-dir', '-l', action='store', default=lib_dir,
+                    help='Lib dir for helpers')
 options, arguments = cmdline.parse_args()
 
 if options.parser_help:
@@ -107,8 +104,23 @@ if 'graphite' in options.output and not options.graphite_host:
 
 class_name = arguments[0]
 log_file   = arguments[1]
-state_dir  = options.state_dir
+config_file = options.config_file
+lib_dir = options.lib_dir
 
+# Local dependencies
+sys.path.append(lib_dir)
+from logster_helper import LogsterParsingException, LockingError
+
+
+# Globals
+cfg = ConfigParser.ConfigParser()
+print config_file
+cfg.read(config_file)
+
+gmetric = cfg.get('logster', 'gmetric') #"/usr/bin/gmetric"
+logtail = cfg.get('logster', 'logtail') #"/usr/sbin/logtail2"
+log_dir = cfg.get('logster', 'log_dir') #"/var/log/logster"
+state_dir = cfg.get('logster', 'state_dir') #"/var/run"
 
 # Logging infrastructure for use throughout the script.
 # Uses appending log file, rotated at 100 MB, keeping 5.
