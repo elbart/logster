@@ -4,11 +4,11 @@ Source: https://github.com/etsy/logster
 
 Files: *
 Copyright: <2011> <Etsy https://github.com/etsy>
-           <2011> <Tim Eggert t.eggert@searchmetrics.com>
+           <2011> <Tim Eggert tim@elbart.com>
 License: GPL-3.0+
 
 Files: debian/*
-Copyright: 2011 Tim Eggert <t.eggert@searchmetrics.com>
+Copyright: 2011 Tim Eggert <tim@elbart.com>
 License: GPL-3.0+
 
 License: GPL-3.0+

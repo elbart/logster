@@ -1,7 +1,7 @@
 Source: logster
 Section: admin
 Priority: extra
-Maintainer: Tim Eggert <t.eggert@searchmetrics.com>
+Maintainer: Tim Eggert <tim@elbart.com>
 Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.9.1
 Homepage: https://github.com/elbart/logster
