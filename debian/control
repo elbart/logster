@@ -10,6 +10,6 @@ Homepage: https://github.com/elbart/logster
 
 Package: logster
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python (>=2.5), logtail
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>=2.5), logtail, adduser, ganglia-monitor
 Description: Ganglia logtail parser
  Ganglia logtail parser extendable via python

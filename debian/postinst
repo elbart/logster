@@ -1,13 +1,13 @@
 #!/bin/sh
 
-id logster 2>/dev/null
+id seo-monitoring 2>/dev/null
 if [ $? -eq 0 ]; then
-    echo "User 'logster' already exists! Skipping adduser ..."
+    echo "User 'seo-monitoring' already exists! Skipping adduser ..."
     exit
 fi
 
-adduser --system --no-create-home --disabled-login --disabled-password --group logster
+adduser --system --no-create-home --disabled-login --disabled-password --group seo-monitoring
 
-chown -R logster /usr/local/var/run/logster
-chown -R root:logster /var/log/logster
+chown -R seo-monitoring /usr/local/var/run/logster
+chown -R root:seo-monitoring /var/log/logster
 chmod g+w /var/log/logster

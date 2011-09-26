@@ -1,9 +1,11 @@
 
 install:
-	/bin/mkdir -p ${DESTDIR}/usr/share/logster
-	/bin/mkdir -p ${DESTDIR}/var/log/logster
-	/bin/mkdir -p ${DESTDIR}/etc/logster
-	/bin/mkdir -p ${DESTDIR}/usr/sbin
+	/usr/bin/install -d ${DESTDIR}/usr/share/logster
+	/usr/bin/install -d ${DESTDIR}/etc/logster
+	/usr/bin/install -d ${DESTDIR}/var/log/logster
+	/usr/bin/install -d ${DESTDIR}/usr/sbin
+	/usr/bin/install -d ${DESTDIR}/usr/local/var/run/logster
+
 	/usr/bin/install -m 0755 -t ${DESTDIR}/usr/sbin logster
 	/usr/bin/install -m 0755 -t ${DESTDIR}/etc/logster logster.conf
 	#/bin/sed -i 's@%destdir%@${DESTDIR}@g' ${DESTDIR}/etc/logster/logster.conf
